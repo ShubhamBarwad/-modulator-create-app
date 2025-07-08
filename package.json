@@ -1,0 +1,20 @@
+{
+  "name": "@modulator/create-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "create-modulator-app": "./index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "prompts": "^2.4.2"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/prompts": "^2.4.9"
+  }
+}

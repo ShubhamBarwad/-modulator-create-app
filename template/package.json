@@ -1,0 +1,21 @@
+{
+  "name": "modulator-app",
+  "version": "1.0.0",
+  "main": "src/build/app.ts",
+  "scripts": {
+    "start": "ts-node src/build/app.ts",
+    "cli": "modulator"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modulator/core": "^1.0.0",
+    "@modulator/cli": "^1.0.0",
+    "express": "^5.1.0",
+    "prisma": "^6.11.1",
+    "@prisma/client": "^6.11.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+} 
