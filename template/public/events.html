@@ -14,18 +14,34 @@
     <a href="modules.html">Modules</a>
     <a href="events.html">Events</a>
     <a href="di.html">DI</a>
+    <a href="auto-discovery.html">Auto-Discovery</a>
     <a href="faq.html">FAQ</a>
   </nav>
   <div class="container">
-    <h1>Event-Driven Communication</h1>
+    <h1>🔗 Event-Driven Communication</h1>
     <p>
       Nodesmith uses a powerful event bus to enable decoupled communication between modules. Events are the backbone of scalable, modular applications.
     </p>
+    
+    <h2>🚀 Auto-Discovery Events</h2>
+    <p>Events are automatically discovered and registered from the <code>events/</code> folder in each module:</p>
+    <pre><code>// events/userEvents.ts
+export function register(eventBus: any) {
+  eventBus.on('user.created', (user) => {
+    console.log('User created:', user);
+  });
+  
+  eventBus.on('user.updated', (user) => {
+    console.log('User updated:', user);
+  });
+}</code></pre>
+    
     <h2>How Events Work</h2>
     <ul>
       <li>Modules emit events to signal that something has happened.</li>
       <li>Other modules listen for those events and react accordingly.</li>
       <li>No direct references between modules—just events!</li>
+      <li>Events are automatically discovered and registered at startup.</li>
     </ul>
     <h2>Basic Usage</h2>
     <pre><code>import { getEventBus } from '@yourorg/core';

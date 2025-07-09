@@ -37,39 +37,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const core_1 = require("@modulator/core");
-const core_2 = require("@modulator/core");
 const app = (0, express_1.default)();
 // Start the server and visit the server URL to explore the framework features.
 // Once you're ready to begin development, you can remove this line.
 app.use(express_1.default.static(path.join(process.cwd(), 'public')));
 // Register Classes for DI
-core_1.container.register('EventBus', core_2.EventBus, { singleton: true });
+core_1.container.register('EventBus', core_1.EventBus, { singleton: true });
 const eventBus = core_1.container.resolve('EventBus');
 eventBus.on('module.loaded', () => console.log("All Modules Loaded"));
-// Load enabled modules from config
-const configPath = path.join(__dirname, '../../config/modules.json');
-const enabledModules = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-for (const [moduleName, isEnabled] of Object.entries(enabledModules)) {
-    if (!isEnabled)
-        continue;
+// Load enabled modules
+const modules = (0, core_1.loadEnabledModules)();
+// Auto-discovery: Automatically find and register components
+// Note: AutoDiscovery will be available in future versions
+// For now, we'll use the manual registration approach
+for (const module of modules) {
     try {
         // Dynamically import the module's hooks
-        const moduleEntryPath = path.join(__dirname, '../../modules', moduleName, 'index');
+        const moduleEntryPath = path.join(module.modulePath, 'index');
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const hooks = require(moduleEntryPath).default;
         if (hooks && typeof hooks.registerRoutes === 'function') {
             hooks.registerRoutes(app);
-            console.log(`Registered routes for module: ${moduleName}`);
+            console.log(`Registered routes for module: ${module.name}`);
+        }
+        if (hooks && typeof hooks.registerEvents === 'function') {
+            hooks.registerEvents(eventBus);
+            console.log(`Registered events for module: ${module.name}`);
         }
     }
     catch (err) {
-        console.error(`Failed to load module '${moduleName}':`, err);
+        console.error(`Failed to load module '${module.name}':`, err);
     }
 }
 eventBus.emit('module.loaded');
 app.listen(3000, () => {
     console.log('Server running on port 3000');
+    console.log('Visit http://localhost:3000 to explore the framework features');
 });

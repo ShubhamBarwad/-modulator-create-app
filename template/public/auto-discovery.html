@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nodesmith Modules</title>
+  <title>Auto-Discovery | Nodesmith</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,25 +18,29 @@
     <a href="faq.html">FAQ</a>
   </nav>
   <div class="container">
-    <h1>📦 Modules</h1>
+    <h1>🚀 Auto-Discovery System</h1>
     <p>
-      Modules are the building blocks of Nodesmith applications. Each module is self-contained with its own routes, 
-      events, services, and business logic. The framework automatically discovers and registers all components.
+      Nodesmith's auto-discovery system automatically finds and registers components based on your module's folder structure. 
+      No manual registration required - just drop files in the right folders!
     </p>
 
-    <h2>🚀 Auto-Discovery Module Structure</h2>
+    <h2>How It Works</h2>
+    <p>
+      When your application starts, Nodesmith scans each module's folders and automatically:
+    </p>
+    <ul>
+      <li>Discovers and registers event handlers</li>
+      <li>Finds and mounts HTTP routes</li>
+      <li>Registers services in the DI container</li>
+      <li>Collects middleware and types</li>
+    </ul>
+
+    <h2>📁 Folder Structure</h2>
     <p>Each module follows this consistent structure:</p>
     <pre><code>modules/your-module/
 ├── routes/          # HTTP routes (auto-registered)
-│   ├── userRoutes.ts
-│   ├── profileRoutes.ts
-│   └── Routes.ts
 ├── events/          # Event handlers (auto-registered)
-│   ├── userEvents.ts
-│   └── Events.ts
 ├── services/        # Business logic (auto-registered in DI)
-│   ├── UserService.ts
-│   └── EmailService.ts
 ├── middleware/      # Custom middleware (auto-discovered)
 ├── types/           # TypeScript types (auto-discovered)
 ├── models/          # Database schemas (handled by db:migrate)
@@ -56,83 +60,39 @@ export function register(app: any) {
   app.get('/users', (req, res) => {
     res.json({ users: [] });
   });
-  
-  app.post('/users', (req, res) => {
-    res.status(201).json({ message: 'User created' });
-  });
-}</code></pre>
+}
 
-    <h3>Express Router Pattern</h3>
-    <pre><code>// routes/profileRoutes.ts
+// routes/profileRoutes.ts
 import { Router } from 'express';
-
 const router = Router();
-
-router.get('/', (req, res) => {
-  res.json({ profile: {} });
-});
-
-router.put('/', (req, res) => {
-  res.json({ message: 'Profile updated' });
-});
-
+router.get('/', (req, res) => res.json({ profile: {} }));
 export default router;</code></pre>
 
     <h3>Events Auto-Discovery</h3>
+    <p>Create event files in the <code>events/</code> folder:</p>
     <pre><code>// events/userEvents.ts
 export function register(eventBus: any) {
   eventBus.on('user.created', (user) => {
     console.log('User created:', user);
   });
-  
-  eventBus.on('user.updated', (user) => {
-    console.log('User updated:', user);
-  });
 }</code></pre>
 
     <h3>Services Auto-Discovery</h3>
+    <p>Create service files in the <code>services/</code> folder:</p>
     <pre><code>// services/UserService.ts
 export class UserService {
   async createUser(userData: any) {
     // Business logic here
     return user;
   }
-  
-  async getUserById(id: number) {
-    // Business logic here
-    return user;
-  }
-}</code></pre>
-
-    <h2>📋 Module Manifest</h2>
-    <p>Each module has a <code>module.json</code> manifest:</p>
-    <pre><code>{
-  "name": "user",
-  "version": "1.0.0",
-  "description": "User management module",
-  "author": "Your Name",
-  "dependencies": ["email"],
-  "migrations": ["migrations/001_create_users.sql"],
-  "routes": ["controller/userController.ts"],
-  "models": [],
-  "entry": "index.ts"
 }</code></pre>
 
     <h2>🔍 Discovery Commands</h2>
-    <p>Use the CLI to explore your modules:</p>
-    <pre><code># List all modules
-npm run cli module:list
+    <p>Use the CLI to see what components are discovered:</p>
+    <pre><code>npm run cli module:discover</code></pre>
+    <p>This shows a detailed report of all discovered components across all modules.</p>
 
-# Show detailed module info
-npm run cli module:info user
-
-# Discover all components
-npm run cli module:discover
-
-# Create a new module
-npm run cli module:create mymodule</code></pre>
-
-    <h2>✨ Benefits of Auto-Discovery</h2>
+    <h2>✨ Benefits</h2>
     <ul>
       <li><strong>Zero Configuration:</strong> No manual registration needed</li>
       <li><strong>Consistent Structure:</strong> All modules follow the same pattern</li>
@@ -141,9 +101,18 @@ npm run cli module:create mymodule</code></pre>
       <li><strong>Flexible:</strong> Supports multiple patterns and approaches</li>
     </ul>
 
+    <h2>🔄 Migration from Manual Registration</h2>
+    <p>If you have existing modules with manual registration in <code>index.ts</code>:</p>
+    <ol>
+      <li>Move routes from <code>index.ts</code> to <code>routes/</code> folder files</li>
+      <li>Move events from <code>index.ts</code> to <code>events/</code> folder files</li>
+      <li>Move services to <code>services/</code> folder files</li>
+      <li>The framework will auto-discover everything!</li>
+    </ol>
+
     <h2>📚 Next Steps</h2>
     <p>
-      <a href="auto-discovery.html" style="color:#00b894;font-weight:bold;">Learn About Auto-Discovery &rarr;</a>
+      <a href="modules.html" style="color:#00b894;font-weight:bold;">Learn about Modules &rarr;</a>
       <a href="events.html" style="color:#00b894;font-weight:bold;">Explore Events &rarr;</a>
       <a href="di.html" style="color:#00b894;font-weight:bold;">Dependency Injection &rarr;</a>
     </p>
