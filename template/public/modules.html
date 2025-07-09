@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nodesmith Modules</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Modules</h1>
+    <h2>Module Structure</h2>
+    <pre><code>modules/
+  mymodule/
+    index.ts
+    controller/
+    model/
+    module.json
+</code></pre>
+    <h2>Lifecycle Hooks</h2>
+    <ul>
+      <li><code>init(app, config)</code> — Setup logic</li>
+      <li><code>registerRoutes(router)</code> — Register HTTP routes</li>
+      <li><code>registerModels(orm)</code> — Register database models</li>
+      <li><code>onShutdown()</code> — Cleanup logic</li>
+    </ul>
+    <h2>Registering Routes</h2>
+    <pre><code>// index.ts
+export default {
+  registerRoutes(app) {
+    app.get('/hello', (req, res) => res.send('Hello from my module!'));
+  }
+};
+</code></pre>
+    <h2>Registering Events</h2>
+    <pre><code>import { getEventBus } from '@modulator/core';
+const eventBus = getEventBus();
+eventBus.on('something', handler);
+eventBus.emit('something', data);
+</code></pre>
+  </div>
+</body>
+</html> 

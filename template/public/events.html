@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events | Nodesmith</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Event-Driven Communication</h1>
+    <p>
+      Nodesmith uses a powerful event bus to enable decoupled communication between modules. Events are the backbone of scalable, modular applications.
+    </p>
+    <h2>How Events Work</h2>
+    <ul>
+      <li>Modules emit events to signal that something has happened.</li>
+      <li>Other modules listen for those events and react accordingly.</li>
+      <li>No direct references between modules—just events!</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <pre><code>import { getEventBus } from '@yourorg/core';
+
+const eventBus = getEventBus();
+
+eventBus.on('user.registered', (user) => {
+  console.log('New user:', user);
+});
+
+eventBus.emit('user.registered', { id: 1, name: 'Alice' });
+</code></pre>
+    <h2>Request/Response with Correlation IDs</h2>
+    <p>For workflows where you need confirmation (e.g., sending an email), use correlation IDs:</p>
+    <pre><code>// Auth module emits:
+const correlationId = generateUniqueId();
+eventBus.emit('email.send', { to, subject, body, correlationId });
+
+// Email module listens and responds:
+eventBus.on('email.send', (payload) => {
+  // ...send email...
+  eventBus.emit('email.sent', { correlationId });
+});
+
+// Auth module listens for confirmation:
+eventBus.on('email.sent', ({ correlationId }) => {
+  if (correlationId === myCorrelationId) {
+    // Proceed with 2FA
+  }
+});
+</code></pre>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Always use event payloads—avoid shared mutable state.</li>
+      <li>Document your event types and payloads.</li>
+      <li>Use correlation IDs for request/response patterns.</li>
+      <li>Handle errors by emitting <code>*.failed</code> events.</li>
+    </ul>
+    <h2>Advanced Tips</h2>
+    <ul>
+      <li>Build event middleware for logging or validation.</li>
+      <li>Replay or trace events for debugging.</li>
+      <li>Consider distributed event buses for multi-process scaling.</li>
+    </ul>
+  </div>
+</body>
+</html> 

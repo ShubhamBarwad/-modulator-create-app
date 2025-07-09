@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dependency Injection | Nodesmith</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Dependency Injection (DI)</h1>
+    <p>
+      Dependency Injection is a design pattern that allows you to decouple your code by providing dependencies from the outside, rather than hard-coding them. Nodesmith's DI container makes it easy to manage and swap dependencies.
+    </p>
+    <h2>Why Use DI?</h2>
+    <ul>
+      <li>Improves testability by allowing you to mock dependencies.</li>
+      <li>Enables loose coupling between modules and services.</li>
+      <li>Makes it easy to swap implementations (e.g., for logging, storage, etc.).</li>
+    </ul>
+    <h2>Registering Dependencies</h2>
+    <pre><code>import { container } from '@yourorg/core';
+
+container.register('Logger', LoggerClass, { singleton: true });
+container.register('UserService', UserServiceClass, { singleton: false });
+</code></pre>
+    <h2>Resolving Dependencies</h2>
+    <pre><code>const logger = container.resolve<Logger>('Logger');
+const userService = container.resolve<UserService>('UserService');
+</code></pre>
+    <h2>Singleton vs Transient</h2>
+    <ul>
+      <li><strong>Singleton</strong>: One instance for the entire app (default).</li>
+      <li><strong>Transient</strong>: New instance every time you resolve.</li>
+    </ul>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Register core services as singletons.</li>
+      <li>Use transient for stateless, short-lived objects.</li>
+      <li>Never store user-specific data in singletons.</li>
+      <li>Use interfaces/types for strong typing.</li>
+    </ul>
+    <h2>Example: EventBus Registration</h2>
+    <pre><code>container.register('EventBus', EventBus, { singleton: true });
+const eventBus = container.resolve<EventBus>('EventBus');
+</code></pre>
+  </div>
+</body>
+</html> 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nodesmith Architecture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Architecture</h1>
+    <h2>Modular Structure</h2>
+    <p>Nodesmith encourages a modular approach. Each feature or domain is a self-contained module with its own routes, models, and logic.</p>
+    <pre><code>modules/
+  user/
+    index.ts
+    controller/
+  blog/
+    index.ts
+    controller/
+</code></pre>
+    <h2>Event-Driven Communication</h2>
+    <p>Modules communicate via events, not direct calls. This decouples features and enables advanced patterns like logging, monitoring, and async workflows.</p>
+    <pre><code>eventBus.emit('user.registered', { id: 42 });
+eventBus.on('user.registered', (data) => { /* ... */ });</code></pre>
+    <h2>Dependency Injection (DI)</h2>
+    <p>All services and shared resources are registered in the DI container, making them easy to swap, mock, or extend.</p>
+    <pre><code>container.register('EmailService', EmailService, { singleton: true });
+const emailService = container.resolve('EmailService');</code></pre>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Keep modules independent and focused</li>
+      <li>Use events for cross-module communication</li>
+      <li>Register shared services in the DI container</li>
+      <li>Document your module's events and API</li>
+    </ul>
+  </div>
+</body>
+</html> 

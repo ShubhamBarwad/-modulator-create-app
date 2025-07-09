@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Getting Started with Nodesmith</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Getting Started</h1>
+    <ol>
+      <li>
+        <strong>Install dependencies:</strong>
+        <pre><code>npm install</code></pre>
+      </li>
+      <li>
+        <strong>Start the development server:</strong>
+        <pre><code>npm start</code></pre>
+      </li>
+      <li>
+        <strong>Explore the project structure:</strong>
+        <ul>
+          <li><code>src/build/app.ts</code> — Main entry point</li>
+          <li><code>modules/</code> — Your app's modules</li>
+          <li><code>config/modules.json</code> — Module enable/disable config</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Create your first module:</strong>
+        <pre><code>// modules/hello/index.ts
+export default {
+  registerRoutes(app) {
+    app.get('/hello', (req, res) => res.send('Hello from your first module!'));
+  }
+};
+</code></pre>
+      </li>
+      <li>
+        <strong>Visit <a href="/">http://localhost:3000/</a> to see your app running!</strong>
+      </li>
+    </ol>
+    <p>For more advanced usage, see the <a href="features.html">Features</a> and <a href="architecture.html">Architecture</a> pages.</p>
+  </div>
+</body>
+</html> 

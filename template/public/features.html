@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nodesmith Features</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="getting-started.html">Getting Started</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="modules.html">Modules</a>
+    <a href="events.html">Events</a>
+    <a href="di.html">DI</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+  <div class="container">
+    <h1>Core Features</h1>
+    <h2>Dependency Injection (DI) Container</h2>
+    <p>Register and resolve services, support for singletons and transients, and more.</p>
+    <pre><code>container.register('MyService', MyService, { singleton: true });
+const myService = container.resolve('MyService');</code></pre>
+    <h2>Event Bus</h2>
+    <p>Decouple modules with a global event bus. Emit and listen for events anywhere.</p>
+    <pre><code>eventBus.emit('user.created', { id: 1 });
+eventBus.on('user.created', (user) => { /* ... */ });</code></pre>
+    <h2>Module Loader</h2>
+    <p>Automatically loads enabled modules from configuration, validates dependencies, and supports hot-reloading in development.</p>
+    <pre><code>const modules = loadEnabledModules();</code></pre>
+    <h2>TypeScript-First</h2>
+    <p>Strong typing for all core APIs, module manifests, and lifecycle hooks. Enjoy autocompletion and compile-time safety.</p>
+  </div>
+</body>
+</html> 
