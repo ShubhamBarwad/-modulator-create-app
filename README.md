@@ -50,7 +50,8 @@ my-app/
         ...              # Controllers for this module
       model/
         module_schema.prisma # Prisma schema for this module
-      index.ts           # Module hooks (registerRoutes, etc)
+      routes/            # Route registration (auto-discovered)
+      events/            # Event handlers (auto-discovered)
   prisma/
     schema.prisma        # Merged Prisma schema
   src/
@@ -59,6 +60,17 @@ my-app/
   package.json
   tsconfig.json
 ```
+
+---
+
+## 📄 File Naming Conventions
+
+**Recommended:** Use lowercase, descriptive file names for all files in your modules. For example:
+- `userRoutes.ts`, `adminRoutes.ts` (routes)
+- `userEvents.ts`, `emailEvents.ts` (events)
+- `postController.ts`, `userController.ts` (controllers)
+
+This helps keep your codebase consistent and easy to navigate.
 
 ---
 
@@ -75,18 +87,17 @@ my-app/
    ```
 3. **Add controllers in `controller/`** (e.g., `postController.ts`)
 4. **Add a Prisma schema in `model/module_schema.prisma`** (optional)
-5. **Create `index.ts`** to export module hooks:
+5. **Add routes and events** - auto-discovery handles registration automatically!
    ```typescript
-   import { NodesmithModuleHooks } from '@modulator/core';
-   import postController from './controller/postController';
-
-   const hooks: NodesmithModuleHooks = {
-     registerRoutes(app) {
-       postController(app);
-     },
-   };
-
-   export default hooks;
+   // routes/Routes.ts - automatically discovered
+   export function register(app: any) {
+     app.get('/posts', postController);
+   }
+   
+   // events/Events.ts - automatically discovered  
+   export function register(eventBus: any) {
+     eventBus.on('post.created', handlePostCreated);
+   }
    ```
 6. **Enable the module**:
    ```sh

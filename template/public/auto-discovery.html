@@ -48,8 +48,8 @@
 ├── docs/            # Module documentation
 ├── config/          # Module configuration
 ├── utils/           # Utility functions
-├── module.json      # Module manifest
-└── index.ts         # Module entry point</code></pre>
+└── module.json      # Module manifest
+</code></pre>
 
     <h2>🎯 Auto-Discovery Patterns</h2>
     
@@ -101,12 +101,13 @@ export class UserService {
       <li><strong>Flexible:</strong> Supports multiple patterns and approaches</li>
     </ul>
 
-    <h2>🔄 Migration from Manual Registration</h2>
+    <h2>🚏 Migration from Manual Registration</h2>
     <p>If you have existing modules with manual registration in <code>index.ts</code>:</p>
     <ol>
       <li>Move routes from <code>index.ts</code> to <code>routes/</code> folder files</li>
       <li>Move events from <code>index.ts</code> to <code>events/</code> folder files</li>
       <li>Move services to <code>services/</code> folder files</li>
+      <li>Remove <code>index.ts</code> and <code>entry</code> fields from <code>module.json</code></li>
       <li>The framework will auto-discover everything!</li>
     </ol>
 

@@ -44,8 +44,8 @@
 ├── docs/            # Module documentation
 ├── config/          # Module configuration
 ├── utils/           # Utility functions
-├── module.json      # Module manifest
-└── index.ts         # Module entry point</code></pre>
+└── module.json      # Module manifest
+</code></pre>
 
     <h2>🎯 Auto-Discovery Patterns</h2>
     
@@ -112,11 +112,9 @@ export class UserService {
   "description": "User management module",
   "author": "Your Name",
   "dependencies": ["email"],
-  "migrations": ["migrations/001_create_users.sql"],
-  "routes": ["controller/userController.ts"],
-  "models": [],
-  "entry": "index.ts"
-}</code></pre>
+  "migrations": ["migrations/001_create_users.sql"]
+}
+</code></pre>
 
     <h2>🔍 Discovery Commands</h2>
     <p>Use the CLI to explore your modules:</p>

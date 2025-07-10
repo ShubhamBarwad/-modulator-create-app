@@ -38,12 +38,10 @@
       </li>
       <li>
         <strong>Create your first module:</strong>
-        <pre><code>// modules/hello/index.ts
-export default {
-  registerRoutes(app) {
-    app.get('/hello', (req, res) => res.send('Hello from your first module!'));
-  }
-};
+        <pre><code>// modules/hello/routes/helloRoutes.ts
+export function register(app) {
+  app.get('/hello', (req, res) => res.send('Hello from your first module!'));
+}
 </code></pre>
       </li>
       <li>
